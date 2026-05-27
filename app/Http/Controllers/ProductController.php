@@ -15,7 +15,7 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Product::with('categoria');
+        $query = Product::with('categoria')->orderByDesc('id');
 
         // Filtro por categoria
         if ($request->has('category')) {
