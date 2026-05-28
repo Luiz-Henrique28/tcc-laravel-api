@@ -48,6 +48,26 @@ services:
     networks:
       - laravel-network
 
+  pgbouncer:
+    image: edoburu/pgbouncer:latest
+    container_name: laravel-pgbouncer
+    restart: unless-stopped
+    environment:
+      - DATABASE_URL=postgres://tcc_user:tcc_password@db:5432/tcc_catalog
+      - POOL_MODE=transaction
+      - MAX_CLIENT_CONN=100
+      - DEFAULT_POOL_SIZE=20
+      - DB_USER=tcc_user
+      - DB_PASSWORD=tcc_password
+      - AUTH_TYPE=any
+    ports:
+      - "6432:5432"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - laravel-network
+
 volumes:
   pgdata:
 
